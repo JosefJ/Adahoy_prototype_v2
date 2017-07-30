@@ -5,12 +5,14 @@
 //  Injected Web3 protection
 // =============
 
-if (typeof window.web3 !== 'undefined') {
-    injectedProvider = window.web3.currentProvider;
-    web3 = new Web3(injectedProvider);
-} else {
-    web3 = new Web3(new Web3.providers.HttpProvider('http://104.196.220.4:8545'));
-}
+
+// if (typeof window.web3 !== 'undefined') {
+//     injectedProvider = window.web3.currentProvider;
+//     web3 = new Web3(injectedProvider);
+// } else {
+//     web3 = new Web3(new Web3.providers.HttpProvider('http://104.196.220.4:8555'));
+// }
+
 
 var mmrpc, lhrpc, rmrpc;
 
@@ -20,7 +22,7 @@ if (web3.currentProvider.hasOwnProperty("multiStream")) {
 } else if (web3.currentProvider.host.indexOf("/localhost:") != -1) {
     web3.dest = "localhost";
     lhrpc = web3;
-} else if (web3.currentProvider.host == "http://104.196.220.4:8545") {
+} else if (web3.currentProvider.host == "http://104.196.220.4:8555") {
     web3.dest = "adahoyTest";
     rmrpc = web3;
 } else {
@@ -28,13 +30,26 @@ if (web3.currentProvider.hasOwnProperty("multiStream")) {
     console.log("Your RCP is too hipster for me to swallow!");
 }
 
+var agents;
 // force our RPC
 var forceRPC = function() {
     if (web3.dest != "adahoyTest") {
-        rmrpc = new Web3(new Web3.providers.HttpProvider("http://104.196.220.4:8545"));
+        rmrpc = new Web3(new Web3.providers.HttpProvider("http://104.196.220.4:8555"));
         web3 = rmrpc;
-        console.log("Sorry, but your injected Web3 was blocked");
+        console.log("The injected provider was bypassed to connect to the TestRPC");
     }
+
+    // web3.eth.getAccounts(function (result, error) {
+    //     if (result == undefined) {
+    //         agents = error;
+    //     } else {
+    //         agents = result;
+    //     }
+    // });
+
+    agents = web3.eth.accounts;
+    // web3.settings.defaultAccount = agents[0];
+    web3.eth.defaultAccount = agents[0];
 
     $('#startPrototype').text("Start");
     $('#startPrototype').prop('disabled', false);
@@ -123,7 +138,7 @@ var loadContract = function(contractsCount) {
             symbol = "comm" + (index + 1);
             name = "Commission token num." + (index + 1);
             totalSupply = Math.floor(Math.random() * 10) + 1;
-            agent = web3.eth.accounts[(index + 1)];
+            agent = agents[(index + 1)];
             duration = 5;
 
             promises.push(
@@ -135,8 +150,8 @@ var loadContract = function(contractsCount) {
                         agent,
                         duration
                     ],
-                    {
-                        gas: 2000000
+                    {   from: agents[0],
+                        gas: 3000000
                     })
                     .then(
                         function (response) {
@@ -171,7 +186,7 @@ var runZero = function() {
 
         cases.forEach(function (item, index) {
             promises.push(
-                contracts[item.contractI].agentSignature({from: web3.eth.accounts[index + 1]})
+                contracts[item.contractI].agentSignature({from: agents[index + 1]})
                     .then(function (response) {
                         console.log("Agent " + (index + 1) + " signed! TxHash: " + response.transactionHash);
                         $('#contractsHolder tr').eq(index + 1).children().eq(1).children().eq(0).text('-');
@@ -205,7 +220,7 @@ var runYear = function(_year) {
             item.yearOver++;
             if ((item.lasts >= item.yearOver) && (item.shouldLast >= item.yearOver)) {
                 promises.push(
-                    contracts[item.contractI].loadRewardAccount([_year-1], {value: 0})
+                    contracts[item.contractI].loadRewardAccount([_year-1], {from: agents[0], value: 0})
                         .then(function (response) {
                             console.log("Reward payed for contract " + (index + 1) + " over tx: " + response.transactionHash);
 
