@@ -1,0 +1,17 @@
+{
+  "default": {
+    "gas": "auto",
+    "contracts": {
+      "ERC223Interface": {
+        "deploy": false
+      },
+      "ERC223": {
+        "deploy": false
+      },
+      "commissionToken": {
+        "deploy": false
+      }
+    }
+  }
+}
+

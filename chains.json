@@ -1,0 +1,11 @@
+{
+  "0x6cdf560f12ca165e44e88d13f87a51cd35d17f788dc1ccecf2fd2b67e8082a24": {
+    "contracts": {
+      "0x8ae5420298cac68a86275372af76d6301669ed7089241868247dfe2d47104779": {
+        "name": "ERC223",
+        "address": "0x89f5a36f442949592ab88501b00a6a6157a65c90"
+      }
+    },
+    "name": "development"
+  }
+}

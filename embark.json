@@ -1,0 +1,15 @@
+{
+  "contracts": ["app/contracts/**"],
+  "app": {
+    "css/app.css": "app/css/app.css",
+    "css/grayscale.css": "app/css/grayscale.css",
+    "css/bootstrap-slider.css": "app/css/bootstrap-slider.css",
+    "js/app.js": ["embark.js", "app/js/app.js"],
+    "js/grayscale.js": "app/js/grayscale.js",
+    "js/bootstrap-slider.min.js": "app/js/bootstrap-slider.min.js",
+    "index.html": "app/index.html"
+  },
+  "buildDir": "dist/",
+  "config": "config/",
+  "plugins": {}
+}

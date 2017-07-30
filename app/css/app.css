@@ -1,0 +1,38 @@
+th {
+    text-align: center;
+}
+
+.table tr > th:first-child{
+    text-align: left;
+    vertical-align: middle;
+}
+
+.btn {
+    background: #000;
+    margin: 20px 0px;
+    height: 50px;
+}
+
+.btn:active {
+    bacground: #fff;
+    color: #000;
+}
+
+.settings {
+    margin: 10px;
+}
+
+.settings div {
+    display: inline-block;
+}
+
+.settings div:nth-child(1) {
+    width: 300px;
+    text-align: left;
+}
+
+.settings div:nth-child(2) {
+    display: none;
+}
+
+
