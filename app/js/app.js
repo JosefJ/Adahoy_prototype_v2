@@ -6,12 +6,12 @@
 // =============
 
 
-// if (typeof window.web3 !== 'undefined') {
-//     injectedProvider = window.web3.currentProvider;
-//     web3 = new Web3(injectedProvider);
-// } else {
-//     web3 = new Web3(new Web3.providers.HttpProvider('http://104.196.220.4:8555'));
-// }
+if (typeof window.web3 !== 'undefined') {
+    injectedProvider = window.web3.currentProvider;
+    web3 = new Web3(injectedProvider);
+} else {
+    web3 = new Web3(new Web3.providers.HttpProvider('http://104.196.220.4:8555'));
+}
 
 
 var mmrpc, lhrpc, rmrpc;
